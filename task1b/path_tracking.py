@@ -20,7 +20,7 @@
 '''
 
 # Team ID:          NV_6142
-# Author List:      < Names of the team members who worked on this file, comma separated >
+# Author List:      Suyash Maurya , Pathikrit Roy Choudhry
 # Filename:         path_tracking.py
 # Functions:        ackermann_wheel_angles, compute_steering
 
