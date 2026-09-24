@@ -93,33 +93,29 @@ previous_error = 0.0
 
 
 def compute_steering(target_y,current_values):
-    global integral_error , previous_error 
+    import math
 
+def compute_steering(target_y, current_values):
+    
     y = current_values["y"]
-    dt = current_values["dt"]
-
-    error = y - target_y
-
-    Kp = 0.8
-    Ki = 0.0 
-    Kd = 1.0
-
-    P = Kp*error 
-
-    integral_error += (error*dt)
-    I =  Ki*integral_error 
-
-    if dt >0.0:
-        derviative = (error - previous_error )/dt
-
-    else :
-        derviative = 0.0  
-    D =     Kd*derviative
-
-    previous_error = error 
-
-    steering = P + I + D 
-
+    yaw = current_values["yaw"]
+    speed = current_values["speed"]
+    
+    # 1. Heading error (same as before)
+    yaw_error = -yaw
+    
+    # 2. Cross-track error (written so positive turns left, as requested)
+    cross_track_error = y - target_y
+    
+    # 3. Stanley Gain (The ONLY number you need to tune)
+    k = 1.5 
+    
+    # 4. Stanley Equation
+    # We add 0.01 to the speed denominator to prevent a division-by-zero crash
+    position_correction = math.atan2((k * cross_track_error), (speed + 0.01))
+    
+    steering = yaw_error + position_correction
+    
     return steering
     '''
     Purpose:
