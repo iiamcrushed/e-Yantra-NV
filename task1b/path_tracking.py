@@ -101,17 +101,13 @@ def compute_steering(target_y, current_values):
     yaw = current_values["yaw"]
     speed = current_values["speed"]
     
-    # 1. Heading error (same as before)
+
     yaw_error = -yaw
     
-    # 2. Cross-track error (written so positive turns left, as requested)
     cross_track_error = y - target_y
     
-    # 3. Stanley Gain (The ONLY number you need to tune)
     k = 1.5 
     
-    # 4. Stanley Equation
-    # We add 0.01 to the speed denominator to prevent a division-by-zero crash
     position_correction = math.atan2((k * cross_track_error), (speed + 0.01))
     
     steering = yaw_error + position_correction
