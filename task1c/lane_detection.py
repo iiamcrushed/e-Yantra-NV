@@ -173,7 +173,7 @@ def detect_lane(frame):
         lane=VALID_LANES[1]
         center_x_warped = right_x - 170
 
-    warped_p1 = np.array([[[center_x_warped, 0]]], dtype=np.float32)
+    '''warped_p1 = np.array([[[center_x_warped, 0]]], dtype=np.float32)
     warped_p2 = np.array([[[center_x_warped, 480]]], dtype=np.float32)
 
     orig_p1 = cv2.perspectiveTransform(warped_p1, Minv)[0][0]
@@ -187,7 +187,11 @@ def detect_lane(frame):
     else:
         center_x_true = x1
 
-    center_x = int(center_x_true)
+    center_x = int(center_x_true)'''
+
+    warped_point=np.array([[[center_x_warped, 480]]], dtype=np.float32)
+    original_point=cv2.perspectiveTransform(warped_point, Minv)
+    center_x = int(original_point[0][0][0])
 
     
 
