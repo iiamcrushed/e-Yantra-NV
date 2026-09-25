@@ -93,33 +93,25 @@ previous_error = 0.0
 
 
 def compute_steering(target_y,current_values):
-    global integral_error , previous_error 
+    import math
 
+def compute_steering(target_y, current_values):
+    
     y = current_values["y"]
-    dt = current_values["dt"]
+    yaw = current_values["yaw"]
+    speed = current_values["speed"]
+    
 
-    error = y - target_y
-
-    Kp = 0.8
-    Ki = 0.0 
-    Kd = 1.0
-
-    P = Kp*error 
-
-    integral_error += (error*dt)
-    I =  Ki*integral_error 
-
-    if dt >0.0:
-        derviative = (error - previous_error )/dt
-
-    else :
-        derviative = 0.0  
-    D =     Kd*derviative
-
-    previous_error = error 
-
-    steering = P + I + D 
-
+    yaw_error = -yaw
+    
+    cross_track_error = y - target_y
+    
+    k = 1.5 
+    
+    position_correction = math.atan2((k * cross_track_error), (speed + 0.01))
+    
+    steering = yaw_error + position_correction
+    
     return steering
     '''
     Purpose:
